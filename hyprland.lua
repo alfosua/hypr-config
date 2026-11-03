@@ -33,7 +33,7 @@ hl.monitor({
 
 -- Set programs that you use
 local terminal    = "kitty"
-local browser     = "google-chrome"
+local browser     = "brave-browser"
 local fileManager = "nautilus"
 local menu        = "hyprlauncher"
 
@@ -291,8 +291,8 @@ hl.bind("SUPER + M",
 hl.bind("SUPER + E", hl.dsp.exec_cmd(fileManager))
 hl.bind("SUPER + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + R", hl.dsp.exec_cmd(menu))
-hl.bind("SUPER + P", hl.dsp.window.pseudo())
-hl.bind("SUPER + CTRL + P", hl.dsp.window.pin())
+hl.bind("SUPER + ALT + P", hl.dsp.window.pseudo())
+hl.bind("SUPER + CTRL + T", hl.dsp.window.pin())
 hl.bind("SUPER + CTRL + J", hl.dsp.layout("togglesplit")) -- dwindle only
 
 -- Toggle window fullscreen
@@ -347,6 +347,35 @@ hl.define_submap("resize", function()
   hl.bind("Return", hl.dsp.submap("reset"))
 end)
 
+-- Grouping
+-- Toggle group with Super + G
+hl.bind("SUPER + G", hl.dsp.group.toggle())
+-- Enter grouping key submap with Super + Shift + G
+hl.bind("SUPER + SHIFT + G", hl.dsp.submap("grouping"))
+-- Switch next window inside group Super + N
+hl.bind("SUPER + N", hl.dsp.group.next())
+-- Switch back window inside group Super + P
+hl.bind("SUPER + P", hl.dsp.group.prev())
+-- Grouping submap definition:
+hl.define_submap("grouping", function()
+  -- Merge adjacent window into active group using arrow keys
+  hl.bind("left", hl.dsp.window.move({ into_group = "left" }))
+  hl.bind("right", hl.dsp.window.move({ into_group = "right" }))
+  hl.bind("up", hl.dsp.window.move({ into_group = "up" }))
+  hl.bind("down", hl.dsp.window.move({ into_group = "down" }))
+
+  -- Merge adjacent window into active group using vi-motion keys
+  hl.bind("H", hl.dsp.window.move({ into_group = "left" }))
+  hl.bind("L", hl.dsp.window.move({ into_group = "right" }))
+  hl.bind("K", hl.dsp.window.move({ into_group = "up" }))
+  hl.bind("J", hl.dsp.window.move({ into_group = "down" }))
+
+  -- Reset submap
+  hl.bind("Space", hl.dsp.submap("reset"))
+  hl.bind("escape", hl.dsp.submap("reset"))
+  hl.bind("Return", hl.dsp.submap("reset"))
+end)
+
 -- Switch workspaces with mainMod + [0-9]
 -- Move active window to a workspace with mainMod + SHIFT + [0-9]
 for i = 1, 10 do
@@ -372,19 +401,17 @@ local function get_next_available_workspace()
 end
 
 -- Create and switch to a new empty workspace with Super+N
-hl.bind("SUPER + N", function()
+hl.bind("SUPER + W", function()
   hl.dispatch(hl.dsp.focus({ workspace = get_next_available_workspace() }))
 end)
 -- Move window to a new empty workspace with Super+Shift+N
-hl.bind("SUPER + SHIFT + N", function()
+hl.bind("SUPER + SHIFT + W", function()
   hl.dispatch(hl.dsp.window.move({ workspace = get_next_available_workspace() }))
 end)
 
 -- Cycle active workspaces with Super * Ctrl + vi-motion keys
-hl.bind("SUPER + CTRL + H", hl.dsp.focus({ workspace = "e-1" }))
-hl.bind("SUPER + CTRL + J", hl.dsp.focus({ workspace = "e-1" }))
-hl.bind("SUPER + CTRL + K", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind("SUPER + CTRL + L", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind("SUPER + CTRL + N", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind("SUPER + CTRL + P", hl.dsp.focus({ workspace = "e-1" }))
 
 -- Example special workspace (scratchpad)
 hl.bind("SUPER + S", hl.dsp.workspace.toggle_special("magic"))
@@ -398,35 +425,6 @@ hl.bind("SUPER + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind("SUPER + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind("SUPER + mouse:273", hl.dsp.window.resize(), { mouse = true })
 hl.bind("SUPER + SHIFT + mouse:273", hl.dsp.window.resize({ keep_aspect_ratio = true }), { mouse = true })
-
--- Grouping
--- Toggle group with Super + G
-hl.bind("SUPER + G", hl.dsp.group.toggle())
--- Enter grouping key submap with Super + Shift + G
-hl.bind("SUPER + SHIFT + G", hl.dsp.submap("grouping"))
--- Switch next window inside group Ctrl + Tab
-hl.bind("SUPER + CTRL + Tab", hl.dsp.group.next())
--- Switch back window inside group Ctrl + Tab
-hl.bind("SUPER + SHIFT + Tab", hl.dsp.group.prev())
--- Grouping submap definition:
-hl.define_submap("grouping", function()
-  -- Merge adjacent window into active group using arrow keys
-  hl.bind("left", hl.dsp.window.move({ into_group = "left" }))
-  hl.bind("right", hl.dsp.window.move({ into_group = "right" }))
-  hl.bind("up", hl.dsp.window.move({ into_group = "up" }))
-  hl.bind("down", hl.dsp.window.move({ into_group = "down" }))
-
-  -- Merge adjacent window into active group using vi-motion keys
-  hl.bind("H", hl.dsp.window.move({ into_group = "left" }))
-  hl.bind("L", hl.dsp.window.move({ into_group = "right" }))
-  hl.bind("K", hl.dsp.window.move({ into_group = "up" }))
-  hl.bind("J", hl.dsp.window.move({ into_group = "down" }))
-
-  -- Reset submap
-  hl.bind("Space", hl.dsp.submap("reset"))
-  hl.bind("escape", hl.dsp.submap("reset"))
-  hl.bind("Return", hl.dsp.submap("reset"))
-end)
 
 -- Laptop multimedia keys for volume and LCD brightness
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
