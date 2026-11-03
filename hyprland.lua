@@ -283,11 +283,12 @@ hl.device({
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
 
+-- Open interactive logout with Super + Shifft + Delete
+hl.bind("SUPER + SHIFT + Delete", hl.dsp.exec_cmd("wlogout"))
+
 hl.bind("SUPER + Q", hl.dsp.exec_cmd(terminal))
 hl.bind("SUPER + SHIFT + Q", hl.dsp.exec_cmd(browser))
 hl.bind("SUPER + X", hl.dsp.window.close())
-hl.bind("SUPER + M",
-  hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind("SUPER + E", hl.dsp.exec_cmd(fileManager))
 hl.bind("SUPER + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind("SUPER + R", hl.dsp.exec_cmd(menu))
@@ -500,3 +501,4 @@ require("vicinae")
 require("flameshot")
 require("picinpic")
 require("record")
+require("thunderbird")
