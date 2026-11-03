@@ -33,7 +33,7 @@ hl.monitor({
 
 -- Set programs that you use
 local terminal    = "kitty"
-local browser     = "flatpak run app.zen_browser.zen"
+local browser     = "google-chrome"
 local fileManager = "nautilus"
 local menu        = "hyprlauncher"
 
