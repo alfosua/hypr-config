@@ -285,7 +285,7 @@ hl.device({
 
 hl.bind("SUPER + Q", hl.dsp.exec_cmd(terminal))
 hl.bind("SUPER + SHIFT + Q", hl.dsp.exec_cmd(browser))
-hl.bind("SUPER + C", hl.dsp.window.close())
+hl.bind("SUPER + X", hl.dsp.window.close())
 hl.bind("SUPER + M",
   hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind("SUPER + E", hl.dsp.exec_cmd(fileManager))
