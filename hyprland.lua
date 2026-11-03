@@ -405,9 +405,9 @@ hl.bind("SUPER + G", hl.dsp.group.toggle())
 -- Enter grouping key submap with Super + Shift + G
 hl.bind("SUPER + SHIFT + G", hl.dsp.submap("grouping"))
 -- Switch next window inside group Ctrl + Tab
-hl.bind("SUPER + SHIFT + Tab", hl.dsp.group.next())
--- Switch back window inside group Ctrl + Tab
 hl.bind("SUPER + CTRL + Tab", hl.dsp.group.next())
+-- Switch back window inside group Ctrl + Tab
+hl.bind("SUPER + SHIFT + Tab", hl.dsp.group.prev())
 -- Grouping submap definition:
 hl.define_submap("grouping", function()
   -- Merge adjacent window into active group using arrow keys
